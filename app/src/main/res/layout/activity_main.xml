@@ -20,7 +20,7 @@
         android:id="@+id/textView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/coffeeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -32,7 +32,7 @@
         android:id="@+id/zipText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/coffeeButton"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
