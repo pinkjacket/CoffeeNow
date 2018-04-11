@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -52,6 +54,7 @@ public class CoffeeListAdapter extends RecyclerView.Adapter<CoffeeListAdapter.Co
         }
 
         public void bindCoffee(Coffee coffee){
+            Picasso.with(mContext).load(coffee.getImageUrl()).into(mCoffeeImageView);
             mCoffeeNameView.setText(coffee.getName());
 
         }
