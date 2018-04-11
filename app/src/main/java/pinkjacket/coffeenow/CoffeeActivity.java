@@ -3,6 +3,8 @@ package pinkjacket.coffeenow;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,8 +20,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class CoffeeActivity extends AppCompatActivity {
-    @BindView(R.id.zipView) TextView mZipView;
-    @BindView(R.id.listView) ListView mListView;
+    @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
+    private CoffeeListAdapter mAdapter;
     public ArrayList<Coffee> coffees = new ArrayList<>();
     public static final String TAG = CoffeeActivity.class.getSimpleName();
 
@@ -31,7 +33,6 @@ public class CoffeeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
-        mZipView.setText("Zip code: " + location);
         getCoffee(location);
     }
 
@@ -49,21 +50,11 @@ public class CoffeeActivity extends AppCompatActivity {
                 CoffeeActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String[] coffeeNames = new String[coffees.size()];
-                        for (int i = 0; i < coffeeNames.length; i++) {
-                            coffeeNames[i] = coffees.get(i).getName();
-                        }
-
-                        ArrayAdapter adapter = new ArrayAdapter(CoffeeActivity.this, android.R.layout.simple_list_item_1, coffeeNames);
-                        mListView.setAdapter(adapter);
-
-                        for (Coffee coffee : coffees) {
-                            Log.d(TAG, "Name: " + coffee.getName());
-                            Log.d(TAG, "Phone: " + coffee.getPhone());
-                            Log.d(TAG, "Website: " + coffee.getWebsite());
-                            Log.d(TAG, "Image url: " + coffee.getImageUrl());
-                            Log.d(TAG, "Address : " + coffee.getAddress());
-                        }
+                        mAdapter = new CoffeeListAdapter(getApplicationContext(), coffees);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CoffeeActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
                     }
 
                 });
