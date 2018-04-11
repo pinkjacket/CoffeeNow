@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +19,8 @@ import okhttp3.Response;
 
 public class CoffeeActivity extends AppCompatActivity {
     @BindView(R.id.zipView) TextView mZipView;
+    @BindView(R.id.listView) ListView mListView;
+    public ArrayList<Coffee> coffees = new ArrayList<>();
     public static final String TAG = CoffeeActivity.class.getSimpleName();
 
     @Override
@@ -39,13 +44,29 @@ public class CoffeeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try{
-                    String jsonData = response.body().string();
-                    Log.v(TAG, jsonData);
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
+            public void onResponse(Call call, Response response) {
+                coffees = yelpService.processResults(response);
+                CoffeeActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String[] coffeeNames = new String[coffees.size()];
+                        for (int i = 0; i < coffeeNames.length; i++) {
+                            coffeeNames[i] = coffees.get(i).getName();
+                        }
+
+                        ArrayAdapter adapter = new ArrayAdapter(CoffeeActivity.this, android.R.layout.simple_list_item_1, coffeeNames);
+                        mListView.setAdapter(adapter);
+
+                        for (Coffee coffee : coffees) {
+                            Log.d(TAG, "Name: " + coffee.getName());
+                            Log.d(TAG, "Phone: " + coffee.getPhone());
+                            Log.d(TAG, "Website: " + coffee.getWebsite());
+                            Log.d(TAG, "Image url: " + coffee.getImageUrl());
+                            Log.d(TAG, "Address : " + coffee.getAddress());
+                        }
+                    }
+
+                });
             }
         });
     }
