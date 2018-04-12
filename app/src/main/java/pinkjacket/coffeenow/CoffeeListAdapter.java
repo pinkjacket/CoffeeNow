@@ -19,6 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CoffeeListAdapter extends RecyclerView.Adapter<CoffeeListAdapter.CoffeeViewHolder> {
+    private static final int MAX_WIDTH = 200;
+    private static final int MAX_HEIGHT = 200;
+
     private ArrayList<Coffee> mCoffees = new ArrayList<>();
     private Context mContext;
 
@@ -67,7 +70,12 @@ public class CoffeeListAdapter extends RecyclerView.Adapter<CoffeeListAdapter.Co
         }
 
         public void bindCoffee(Coffee coffee){
-            Picasso.with(mContext).load(coffee.getImageUrl()).into(mCoffeeImageView);
+            Picasso.with(mContext)
+                    .load(coffee.getImageUrl())
+                    .resize(MAX_WIDTH, MAX_HEIGHT)
+                    .centerCrop()
+                    .into(mCoffeeImageView);
+
             mCoffeeNameView.setText(coffee.getName());
 
         }

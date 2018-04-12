@@ -23,6 +23,8 @@ public class CoffeeDetailFragment extends Fragment {
     @BindView(R.id.websiteTextView) TextView mWebsiteLabel;
     @BindView(R.id.phoneTextView) TextView mPhoneLabel;
     @BindView(R.id.addressTextView) TextView mAddressLabel;
+    private static final int MAX_WIDTH = 400;
+    private static final int MAX_HEIGHT = 300;
 
     private Coffee mCoffee;
 
@@ -46,7 +48,11 @@ public class CoffeeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_coffee_detail, container, false);
         ButterKnife.bind(this, view);
 
-        Picasso.with(view.getContext()).load(mCoffee.getImageUrl()).into(mImageLabel);
+        Picasso.with(view.getContext())
+                .load(mCoffee.getImageUrl())
+                .resize(MAX_WIDTH, MAX_HEIGHT)
+                .centerCrop()
+                .into(mImageLabel);
 
         mNameLabel.setText(mCoffee.getName());
         mPhoneLabel.setText(mCoffee.getPhone());
