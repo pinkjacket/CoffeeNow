@@ -1,15 +1,20 @@
 package pinkjacket.coffeenow;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 
+@Parcel
 public class Coffee {
-    private String name;
-    private String phone;
-    private String website;
-    private String imageUrl;
-    private ArrayList<String> address = new ArrayList<>();
-    private double latitude;
-    private double longitude;
+    String name;
+    String phone;
+    String website;
+    String imageUrl;
+    ArrayList<String> address = new ArrayList<>();
+    double latitude;
+    double longitude;
+
+    public Coffee(){}
 
     public Coffee(String name, String phone, String website, String imageUrl, ArrayList<String> address, double latitude, double longitude){
         this.name = name;

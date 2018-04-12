@@ -6,24 +6,53 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CoffeeDetailFragment extends Fragment {
+    @BindView(R.id.coffeeDetailImageView) ImageView mImageLabel;
+    @BindView(R.id.coffeeNameTextView) TextView mNameLabel;
+    @BindView(R.id.websiteTextView) TextView mWebsiteLabel;
+    @BindView(R.id.phoneTextView) TextView mPhoneLabel;
+    @BindView(R.id.addressTextView) TextView mAddressLabel;
 
+    private Coffee mCoffee;
 
-    public CoffeeDetailFragment() {
-        // Required empty public constructor
+    public static CoffeeDetailFragment newInstance(Coffee coffee) {
+        CoffeeDetailFragment coffeeDetailFragment = new CoffeeDetailFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("coffee", Parcels.wrap(coffee));
+        coffeeDetailFragment.setArguments(args);
+        return coffeeDetailFragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        mCoffee = Parcels.unwrap(getArguments().getParcelable("coffee"));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_coffee_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_coffee_detail, container, false);
+        ButterKnife.bind(this, view);
+
+        Picasso.with(view.getContext()).load(mCoffee.getImageUrl()).into(mImageLabel);
+
+        mNameLabel.setText(mCoffee.getName());
+        mPhoneLabel.setText(mCoffee.getPhone());
+        mAddressLabel.setText(android.text.TextUtils.join(",", mCoffee.getAddress()));
+
+        return view;
     }
 
 }

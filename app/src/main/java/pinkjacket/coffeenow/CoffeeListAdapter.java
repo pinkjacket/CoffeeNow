@@ -1,6 +1,7 @@
 package pinkjacket.coffeenow;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -41,7 +44,7 @@ public class CoffeeListAdapter extends RecyclerView.Adapter<CoffeeListAdapter.Co
         return mCoffees.size();
     }
 
-    public class CoffeeViewHolder extends RecyclerView.ViewHolder{
+    public class CoffeeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.coffeeImageView) ImageView mCoffeeImageView;
         @BindView(R.id.coffeeNameView) TextView mCoffeeNameView;
 
@@ -51,6 +54,16 @@ public class CoffeeListAdapter extends RecyclerView.Adapter<CoffeeListAdapter.Co
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v){
+            int itemPosition = getLayoutPosition();
+            Intent intent = new Intent(mContext, CoffeeDetailActivity.class);
+            intent.putExtra("position", itemPosition);
+            intent.putExtra("coffees", Parcels.wrap(mCoffees));
+            mContext.startActivity(intent);
         }
 
         public void bindCoffee(Coffee coffee){

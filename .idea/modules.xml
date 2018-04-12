@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CoffeeNow.iml" filepath="$PROJECT_DIR$/CoffeeNow.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CoffeeNow.iml" filepath="$PROJECT_DIR$/CoffeeNow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CoffeeNow.iml" filepath="$PROJECT_DIR$/.idea/CoffeeNow.iml" />
+      <module fileurl="file://C:\Users\James\StudioProjects\CoffeeNow\CoffeeNow.iml" filepath="C:\Users\James\StudioProjects\CoffeeNow\CoffeeNow.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\James\StudioProjects\CoffeeNow\app\app.iml" filepath="C:\Users\James\StudioProjects\CoffeeNow\app\app.iml" />
     </modules>
   </component>
 </project>
